@@ -2,26 +2,41 @@ import React, { useState, useEffect } from "react";
 
 export const Manager = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [form, setform] = useState({ site: "", username: "", password: "" });
+  const [form, setForm] = useState({ site: "", username: "", password: "" });
   const [passwordArray, setPasswordArray] = useState([]);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+
   useEffect(() => {
-    let passwords = localStorage.getItem("passwords");
+    const passwords = localStorage.getItem("passwords");
 
     if (passwords) {
-      setPasswordArray(JSON.parse(passwords));
+      try {
+        const parsedPasswords = JSON.parse(passwords);
+        if (Array.isArray(parsedPasswords)) {
+          setPasswordArray(parsedPasswords);
+        } else {
+          console.error("Parsed passwords is not an array:", parsedPasswords);
+          setPasswordArray([]); // Initialize as an empty array
+        }
+      } catch (error) {
+        console.error("Error parsing passwords:", error);
+        setPasswordArray([]); // Initialize as an empty array
+      }
     }
   }, []);
-  const savepassword = () => {
-    setPasswordArray([...passwordArray, form])
-    localStorage.setItem("passwords", JSON.stringify([...passwordArray, form]));
-    console.log([...passwordArray, form]);
+
+  const savePassword = () => {
+    const updatedPasswordArray = [...passwordArray, form];
+    setPasswordArray(updatedPasswordArray);
+    localStorage.setItem("passwords", JSON.stringify(updatedPasswordArray));
+    console.log("Updated Password Array:", updatedPasswordArray); // Logging the updated password array
   };
+
   const handleChange = (e) => {
-    setform({ ...form, [e.target.name]: e.target.value });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   return (
@@ -78,9 +93,8 @@ export const Manager = () => {
               </span>
             </div>
           </div>
-          '
           <button
-            onClick={savepassword}
+            onClick={savePassword}
             className="text-purple-100 gap-2 bg-purple-700 flex justify-center items-center rounded-full px-8 py-2 w-fit hover:bg-purple-500 border border-purple-600"
           >
             <lord-icon
