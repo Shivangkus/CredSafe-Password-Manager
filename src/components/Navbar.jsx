@@ -12,7 +12,7 @@ const Navbar = () => {
           Cred
           <span className="text-purple-500">Safe/&gt;</span>
         </div>
-        <ul>
+        {/* <ul>
           <li className="flex gap-4">
             <a className="hover:font-bold" href="/">
               Home
@@ -24,7 +24,7 @@ const Navbar = () => {
               Contact
             </a>
           </li>
-        </ul>
+        </ul>  */}
         <Button className='bg-purple-700 font-bold rounded-full'>
           <Github className="mr-2 h-4 w-4 text-black" /> Github
         </Button>
