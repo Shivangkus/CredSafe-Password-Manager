@@ -1,4 +1,7 @@
 import React from "react";
+import { Github, } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   return (
@@ -22,6 +25,9 @@ const Navbar = () => {
             </a>
           </li>
         </ul>
+        <Button className='bg-purple-700 font-bold rounded-full'>
+          <Github className="mr-2 h-4 w-4 text-black" /> Github
+        </Button>
       </div>
     </nav>
   );

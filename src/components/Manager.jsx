@@ -41,7 +41,7 @@ export const Manager = () => {
 
   return (
     <>
-      <div className="absolute inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
+      <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
       <div className=" text-white  mycontainer">
         <h1 className="text-4xl text font-bold text-center">
           <span className="text-purple-500">&lt;</span>Cred
@@ -106,37 +106,36 @@ export const Manager = () => {
         </div>
         <div className="passwords">
           <h2 className="font-bold text-xl py-4">Your Passwords</h2>
-          {passwordArray.length === 0 ? <div>No Password to show</div> :
-
-          <table className="table-auto w-full rounded-xl overflow-hidden ">
-            <thead className="bg-purple-400 text-black">
-              <tr>
-                 <th className="py-2">Site</th>
-                 <th className="py-2">Username</th>
-                 <th className="py-2">Password</th>
-              </tr>
-            </thead>
+          {passwordArray.length === 0 ? (
+            <div>No Password to show</div>
+          ) : (
+            <table className="table-auto w-full rounded-xl overflow-hidden ">
+              <thead className="bg-purple-400 text-black">
+                <tr>
+                  <th className="py-2">Site</th>
+                  <th className="py-2">Username</th>
+                  <th className="py-2">Password</th>
+                </tr>
+              </thead>
               <tbody className="bg-purple-950 ">
-                {passwordArray.map((item,index)=>{
+                {passwordArray.map((item, index) => {
                   return (
                     <tr key={index}>
                       <td className="text-center w-12 py-2">
-                        <a href={item.site} target="_blank">{item.site}</a>
+                        <a href={item.site} target="_blank">
+                          {item.site}
+                        </a>
                       </td>
                       <td className="text-center w-12 py-2">{item.username}</td>
                       <td className="text-center w-12 py-2">{item.password}</td>
                     </tr>
                   );
-                  }
-  )
-              }
-            
-            </tbody>
-          </table>}
+                })}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
-    
-            
-            </>
+    </>
   );
 };
