@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Manager = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -7,6 +9,19 @@ export const Manager = () => {
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
+  };
+  const copyText = (text) => {
+   toast("Copied to clipboard!", {
+     position: "top-right",
+     autoClose: 500,
+     hideProgressBar: false,
+     closeOnClick: true,
+     pauseOnHover: false,
+     draggable: true,
+     progress: undefined,
+     theme: "dark",
+   });
+    navigator.clipboard.writeText(text);
   };
 
   useEffect(() => {
@@ -41,6 +56,19 @@ export const Manager = () => {
 
   return (
     <>
+      <ToastContainer
+position="top-right"
+autoClose={500}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss={false}
+draggable
+pauseOnHover={false}
+theme="dark"
+transition: Bounce
+/>
       <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
       <div className=" text-white  mycontainer">
         <h1 className="text-4xl text font-bold text-center">
@@ -121,13 +149,65 @@ export const Manager = () => {
                 {passwordArray.map((item, index) => {
                   return (
                     <tr key={index}>
-                      <td className="text-center w-12 py-2">
-                        <a href={item.site} target="_blank">
-                          {item.site}
-                        </a>
+                      <td className=" text-center items-center py-2 hover:underline">
+                        <div className="flex items-center justify-center">
+                          <a href={item.site} target="_blank">
+                            {item.site}
+                          </a>
+                          <div className="cursor-pointer size-7">
+                            <lord-icon
+                              style={{
+                                width: "16px",
+                                height: "30px",
+                                padddingTop: "3px",
+                              }}
+                              src="https://cdn.lordicon.com/depeqmsz.json"
+                              trigger="hover"
+                              onClick={() => {
+                                copyText(item.site);
+                              }}
+                            ></lord-icon>
+                          </div>
+                        </div>
                       </td>
-                      <td className="text-center w-12 py-2">{item.username}</td>
-                      <td className="text-center w-12 py-2">{item.password}</td>
+                      <td className=" text-center w-12 py-2">
+                        <div className="flex items-center justify-center">
+                          {item.username}
+                          <div className="cursor-pointer size-7">
+                            <lord-icon
+                              style={{
+                                width: "16px",
+                                height: "30px",
+                                padddingTop: "3px",
+                              }}
+                              src="https://cdn.lordicon.com/depeqmsz.json"
+                              trigger="hover"
+                              onClick={() => {
+                                copyText(item.username);
+                              }}
+                            ></lord-icon>
+                          </div>
+                        </div>
+                      </td>
+                      <td className=" text-center w-12 py-2">
+                        <div className="flex items-center justify-center">
+                          {item.password}
+                          <div className="cursor-pointer size-7">
+                            <lord-icon
+                              style={{
+                                width: "16px",
+                                height: "30px",
+                                padddingTop: "3px",
+                              }}
+                              src="https://cdn.lordicon.com/depeqmsz.json"
+                              trigger="hover"
+                              onClick={() => {
+                                copyText(item.password);
+                              }}
+                            ></lord-icon>
+                          </div>
+                        </div>
+                      </td>
                     </tr>
                   );
                 })}
