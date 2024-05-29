@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Pencil, Trash2 } from "lucide-react";
+import { v4 as uuidv4 } from "uuid";
+import { ConfirmDialog } from "primereact/confirmdialog";
 
 export const Manager = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -11,16 +14,16 @@ export const Manager = () => {
     setPasswordVisible(!passwordVisible);
   };
   const copyText = (text) => {
-   toast("Copied to clipboard!", {
-     position: "top-right",
-     autoClose: 500,
-     hideProgressBar: false,
-     closeOnClick: true,
-     pauseOnHover: false,
-     draggable: true,
-     progress: undefined,
-     theme: "dark",
-   });
+    toast("Copied to clipboard!", {
+      position: "top-right",
+      autoClose: 500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
     navigator.clipboard.writeText(text);
   };
 
@@ -44,7 +47,31 @@ export const Manager = () => {
   }, []);
 
   const savePassword = () => {
-    const updatedPasswordArray = [...passwordArray, form];
+    const updatedPasswordArray = [...passwordArray, { ...form, id: uuidv4() }];
+    setPasswordArray(updatedPasswordArray);
+    localStorage.setItem("passwords", JSON.stringify(updatedPasswordArray));
+    console.log("Updated Password Array:", updatedPasswordArray); // Logging the updated password array
+    setForm({ site: "", username: "", password: "" });
+  };
+
+  const deletePassword = (id) => {
+    console.log("deleteing this id", id);
+
+    {
+      const updatedPasswordArray = passwordArray.filter(
+        (item) => item.id !== id
+      );
+
+      setPasswordArray(updatedPasswordArray);
+      localStorage.setItem("passwords", JSON.stringify(updatedPasswordArray));
+      console.log("Updated Password Array:", updatedPasswordArray); // Logging the updated password array
+    }
+  };
+
+  const editPassword = (id) => {
+    console.log("editing this id", id);
+    setForm(passwordArray.filter((item) => item.id === id)[0]);
+    const updatedPasswordArray = passwordArray.filter((item) => item.id !== id);
     setPasswordArray(updatedPasswordArray);
     localStorage.setItem("passwords", JSON.stringify(updatedPasswordArray));
     console.log("Updated Password Array:", updatedPasswordArray); // Logging the updated password array
@@ -57,18 +84,18 @@ export const Manager = () => {
   return (
     <>
       <ToastContainer
-position="top-right"
-autoClose={500}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss={false}
-draggable
-pauseOnHover={false}
-theme="dark"
-transition: Bounce
-/>
+        position="top-right"
+        autoClose={500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover={false}
+        theme="dark"
+        transition:Bounce
+      />
       <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
       <div className=" text-white  mycontainer">
         <h1 className="text-4xl text font-bold text-center">
@@ -129,7 +156,7 @@ transition: Bounce
               src="https://cdn.lordicon.com/jgnvfzqg.json"
               trigger="hover"
             ></lord-icon>
-            Add Password
+            Save Password
           </button>
         </div>
         <div className="passwords">
@@ -143,18 +170,19 @@ transition: Bounce
                   <th className="py-2">Site</th>
                   <th className="py-2">Username</th>
                   <th className="py-2">Password</th>
+                  <th className="py-2">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-purple-950 ">
                 {passwordArray.map((item, index) => {
                   return (
                     <tr key={index}>
-                      <td className=" text-center items-center py-2 hover:underline">
+                      <td className=" items-center py-2 hover:underline">
                         <div className="flex items-center justify-center">
                           <a href={item.site} target="_blank">
                             {item.site}
                           </a>
-                          <div className="cursor-pointer size-7">
+                          <div className="cursor-pointer size-7 px-1">
                             <lord-icon
                               style={{
                                 width: "16px",
@@ -206,6 +234,25 @@ transition: Bounce
                               }}
                             ></lord-icon>
                           </div>
+                        </div>
+                      </td>
+                      <td className="text-center justify-center w-12 py-2">
+                        <div className="flex cursor-pointer px-16 gap-2">
+                          <Pencil
+                            onClick={() => {
+                              editPassword(item.id);
+                            }}
+                            size={19}
+                            color="#fdb4fe "
+                          />
+
+                          <Trash2
+                            onClick={() => {
+                              deletePassword(item.id);
+                            }}
+                            size={19}
+                            color="#fdb4fe"
+                          />
                         </div>
                       </td>
                     </tr>

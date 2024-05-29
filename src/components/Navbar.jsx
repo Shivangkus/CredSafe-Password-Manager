@@ -25,7 +25,7 @@ const Navbar = () => {
             </a>
           </li>
         </ul>  */}
-        <Button className='bg-purple-700 font-bold rounded-full'>
+        <Button className='bg-purple-700 font-bold rounded-full hover:bg-purple-900 font-bold'>
           <Github className="mr-2 h-4 w-4 text-black" /> Github
         </Button>
       </div>
