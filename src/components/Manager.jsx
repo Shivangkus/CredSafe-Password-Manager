@@ -98,7 +98,7 @@ if(c)
         transition:Bounce
       />
       <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
-      <div className=" text-white  mycontainer">
+      <div className=" text-white px-2  md:mycontainer">
         <h1 className="text-4xl text font-bold text-center">
           <span className="text-purple-500">&lt;</span>Cred
           <span className="text-purple-500">Safe/&gt;</span>
