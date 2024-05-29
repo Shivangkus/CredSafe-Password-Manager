@@ -56,7 +56,8 @@ export const Manager = () => {
 
   const deletePassword = (id) => {
     console.log("deleteing this id", id);
-
+let c = confirm("Do you really want to delete this password?")
+if(c)
     {
       const updatedPasswordArray = passwordArray.filter(
         (item) => item.id !== id
