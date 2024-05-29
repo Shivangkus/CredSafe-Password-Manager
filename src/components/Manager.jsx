@@ -199,7 +199,7 @@ if(c)
                           </div>
                         </div>
                       </td>
-                      <td className=" text-center w-12 py-2">
+                      <td className=" text-center w-13 py-2">
                         <div className="flex items-center justify-center">
                           {item.username}
                           <div className="cursor-pointer size-7">
